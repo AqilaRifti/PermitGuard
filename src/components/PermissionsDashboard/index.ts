@@ -1,0 +1,1 @@
+export { PermissionsDashboard } from './PermissionsDashboard';

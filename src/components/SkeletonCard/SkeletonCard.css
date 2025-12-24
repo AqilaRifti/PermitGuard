@@ -1,0 +1,77 @@
+.skeleton-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+}
+
+.skeleton-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.skeleton-checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+}
+
+.skeleton-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+}
+
+.skeleton-info {
+    flex: 1;
+}
+
+.skeleton-title {
+    width: 120px;
+    height: 16px;
+    margin-bottom: 6px;
+}
+
+.skeleton-url {
+    width: 80px;
+    height: 12px;
+}
+
+.skeleton-badge {
+    width: 70px;
+    height: 24px;
+    border-radius: var(--radius-full);
+}
+
+.skeleton-body {
+    margin-bottom: var(--spacing-md);
+}
+
+.skeleton-line {
+    height: 14px;
+    margin-bottom: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+}
+
+.skeleton-line:last-child {
+    margin-bottom: 0;
+}
+
+.skeleton-line.short {
+    width: 60%;
+}
+
+.skeleton-footer {
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+}
+
+.skeleton-button {
+    width: 100%;
+    height: 36px;
+    border-radius: var(--radius-md);
+}

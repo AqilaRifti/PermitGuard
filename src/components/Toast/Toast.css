@@ -1,0 +1,107 @@
+.toast-container {
+    position: fixed;
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    pointer-events: none;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md) var(--spacing-lg);
+    background: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    min-width: 300px;
+    max-width: 400px;
+    pointer-events: auto;
+}
+
+.toast-success {
+    border-left: 3px solid var(--color-safe);
+}
+
+.toast-success .toast-icon {
+    color: var(--color-safe);
+}
+
+.toast-error {
+    border-left: 3px solid var(--color-dangerous);
+}
+
+.toast-error .toast-icon {
+    color: var(--color-dangerous);
+}
+
+.toast-warning {
+    border-left: 3px solid var(--color-moderate);
+}
+
+.toast-warning .toast-icon {
+    color: var(--color-moderate);
+}
+
+.toast-loading {
+    border-left: 3px solid #667eea;
+}
+
+.toast-loading .toast-icon {
+    color: #667eea;
+}
+
+.toast-icon {
+    flex-shrink: 0;
+}
+
+.toast-icon.spinning {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.toast-message {
+    flex: 1;
+    font-size: 0.875rem;
+    color: var(--color-text-primary);
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+.toast-close:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-card);
+}
+
+@media (max-width: 768px) {
+    .toast-container {
+        left: var(--spacing-md);
+        right: var(--spacing-md);
+        bottom: var(--spacing-md);
+    }
+
+    .toast {
+        min-width: auto;
+        max-width: none;
+    }
+}

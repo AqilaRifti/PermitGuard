@@ -1,0 +1,294 @@
+# Implementation Plan
+
+- [x] 1. Set up project structure and dependencies
+  - [x] 1.1 Initialize Vite + React + TypeScript project
+    - Create new Vite project with React and TypeScript template
+    - Configure tsconfig.json with strict mode and path aliases
+    - _Requirements: 8.1_
+  - [x] 1.2 Install and configure TailwindCSS with dark mode
+    - Install TailwindCSS, PostCSS, and Autoprefixer
+    - Configure tailwind.config.js with dark mode, custom colors (purple/blue gradients), and glassmorphism utilities
+    - Set up global CSS with Inter font and base dark theme styles
+    - _Requirements: 8.1, 8.2_
+  - [x] 1.3 Install and configure shadcn/ui components
+    - Initialize shadcn/ui with dark theme
+    - Install required components: Button, Card, Badge, Input, Toast, Tooltip, Checkbox
+    - _Requirements: 8.1_
+  - [x] 1.4 Install remaining dependencies
+    - Install MetaMask SDK (@metamask/sdk)
+    - Install Framer Motion for animations
+    - Install Lucide React for icons
+    - Install fast-check for property-based testing
+    - Install date-fns for date formatting
+    - _Requirements: 8.1_
+
+- [x] 2. Implement core types and utilities
+  - [x] 2.1 Create TypeScript interfaces and types
+    - Create src/types/permission.ts with Permission, PermissionType, AccessLevel, RiskLevel, SpendLimit interfaces
+    - Create src/types/wallet.ts with WalletState interface
+    - Create src/types/history.ts with PermissionEvent interface
+    - Create src/types/ui.ts with FilterState, UIState, DashboardStats interfaces
+    - _Requirements: 2.3, 3.1, 7.1_
+  - [x] 2.2 Implement risk level calculation utility
+    - Create src/utils/risk.ts with calculateRiskLevel function
+    - Implement logic: readonly→safe, unlimited→dangerous, write→moderate
+    - Create calculateOverallRiskScore function for stats
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 7.2_
+  - [x] 2.3 Write property test for risk level calculation
+    - **Property 3: Risk Level Determinism**
+    - Test that calculateRiskLevel is deterministic for any permission input
+    - Test specific rules: readonly→safe, unlimited→dangerous, write→moderate
+    - **Validates: Requirements 3.1, 3.2, 3.3, 3.4**
+  - [x] 2.4 Implement filter utility functions
+    - Create src/utils/filter.ts with filterBySearch, filterByRiskLevel, filterByPermissionType functions
+    - Create applyFilters function that combines all filters
+    - _Requirements: 6.2, 6.3, 6.4_
+  - [x] 2.5 Write property tests for filter utilities
+    - **Property 5: Filter Result Correctness**
+    - Test that all returned items match filter criteria
+    - Test that no matching items are excluded
+    - **Validates: Requirements 6.2, 6.3, 6.4**
+  - [x] 2.6 Write property test for filter idempotence
+    - **Property 7: Search Filter Idempotence**
+    - Test that applying same filter twice produces identical results
+    - **Validates: Requirements 6.2**
+
+- [x] 3. Implement service layer
+  - [x] 3.1 Create MetaMask service
+    - Create src/services/metamask.service.ts implementing IMetaMaskService interface
+    - Implement connect() method using MetaMask SDK
+    - Implement disconnect() method
+    - Implement getPermissions() method to fetch wallet permissions
+    - Implement revokePermission() and revokePermissions() methods
+    - Add event listeners for account and chain changes
+    - _Requirements: 1.2, 1.3, 1.5, 2.1, 4.1, 4.5_
+  - [x] 3.2 Create Envio service
+    - Create src/services/envio.service.ts implementing IEnvioService interface
+    - Implement getPermissionHistory() method with GraphQL query
+    - Implement subscribeToEvents() for real-time updates
+    - Add error handling for failed queries
+    - _Requirements: 5.1, 5.2, 5.5_
+  - [x] 3.3 Create toast service
+    - Create src/services/toast.service.ts implementing IToastService interface
+    - Integrate with shadcn/ui toast component
+    - Implement success, error, warning, and loading toast methods
+    - _Requirements: 1.4, 4.3, 4.4, 10.2_
+
+- [ ] 4. Implement React context and hooks
+  - [x] 4.1 Create wallet context and hook
+    - Create src/context/WalletContext.tsx with WalletProvider
+    - Create src/hooks/useWallet.ts with connect, disconnect, and state management
+    - Handle connection states: disconnected, connecting, connected
+    - Persist last connected address to localStorage
+    - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5_
+  - [ ] 4.2 Write property test for wallet state transitions
+    - **Property 1: Wallet Connection State Consistency**
+    - Test that wallet state transitions are valid (no inconsistent states)
+    - **Validates: Requirements 1.2, 1.3, 1.4**
+  - [x] 4.3 Create permissions hook
+    - Create src/hooks/usePermissions.ts
+    - Fetch permissions on wallet connect
+    - Handle loading and error states
+    - Implement revoke functionality with optimistic updates
+    - _Requirements: 2.1, 2.2, 4.1, 4.2, 4.3, 4.4_
+  - [ ] 4.4 Write property test for permission display completeness
+    - **Property 2: Permission Display Completeness**
+    - Test that all permissions are rendered without omissions or duplications
+    - **Validates: Requirements 2.1, 2.3**
+  - [x] 4.5 Create history hook
+    - Create src/hooks/useHistory.ts
+    - Fetch history from Envio on wallet connect
+    - Handle loading and error states with graceful degradation
+    - _Requirements: 5.1, 5.2, 5.4_
+  - [x] 4.6 Create filters hook
+    - Create src/hooks/useFilters.ts
+    - Manage filter state (search, risk level, permission type)
+    - Persist filter preferences to localStorage
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+  - [x] 4.7 Create stats hook
+    - Create src/hooks/useStats.ts
+    - Calculate total permissions, risk counts, and overall risk score
+    - Calculate recent activity count from history
+    - _Requirements: 7.1, 7.2, 7.3_
+  - [ ] 4.8 Write property test for stats calculation
+    - **Property 6: Stats Calculation Accuracy**
+    - Test that total count equals sum of risk level counts
+    - Test that stats match actual permission data
+    - **Validates: Requirements 7.1, 7.2**
+
+- [ ] 5. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 6. Implement UI components - Core
+  - [x] 6.1 Create Layout component
+    - Create src/components/Layout/Layout.tsx
+    - Implement dark mode container with gradient background
+    - Add responsive padding and max-width constraints
+    - _Requirements: 8.1, 9.1, 9.3, 9.4_
+  - [x] 6.2 Create HeroSection component
+    - Create src/components/HeroSection/HeroSection.tsx
+    - Display gradient background with bold headline
+    - Show ConnectButton when disconnected
+    - Show WalletInfo when connected
+    - _Requirements: 1.1, 8.1_
+  - [x] 6.3 Create ConnectButton component
+    - Create src/components/ConnectButton/ConnectButton.tsx
+    - Implement MetaMask connection with loading state
+    - Handle MetaMask not installed case with install link
+    - Style with gradient and hover effects
+    - _Requirements: 1.1, 1.2, 10.3_
+  - [x] 6.4 Create WalletInfo component
+    - Create src/components/WalletInfo/WalletInfo.tsx
+    - Display truncated wallet address
+    - Add disconnect button
+    - _Requirements: 1.3, 1.5_
+
+- [ ] 7. Implement UI components - Permission Cards
+  - [x] 7.1 Create RiskBadge component
+    - Create src/components/RiskBadge/RiskBadge.tsx
+    - Implement color-coded badges (green/yellow/red)
+    - Add size variants (sm, md, lg)
+    - _Requirements: 3.1_
+  - [ ] 7.2 Create PermissionTypeBadge component
+    - Create src/components/PermissionTypeBadge/PermissionTypeBadge.tsx
+    - Display permission type with icon (read/write/spend)
+    - _Requirements: 2.3_
+  - [ ] 7.3 Create ExpiryCountdown component
+    - Create src/components/ExpiryCountdown/ExpiryCountdown.tsx
+    - Display countdown timer for permissions with expiry
+    - Handle expired state
+    - _Requirements: 3.5_
+  - [x] 7.4 Create PermissionCard component
+    - Create src/components/PermissionCard/PermissionCard.tsx
+    - Implement glassmorphism styling with backdrop blur
+    - Display dApp name, icon, permission type, grant date
+    - Include RiskBadge, PermissionTypeBadge, ExpiryCountdown
+    - Add revoke button with loading state
+    - Add checkbox for bulk selection
+    - Implement hover effects and Framer Motion animations
+    - _Requirements: 2.3, 2.5, 3.1, 3.5, 4.1, 4.2, 8.2, 8.3_
+  - [x] 7.5 Create SkeletonCard component
+    - Create src/components/SkeletonCard/SkeletonCard.tsx
+    - Implement loading skeleton matching PermissionCard layout
+    - Add shimmer animation
+    - _Requirements: 2.2_
+
+- [ ] 8. Implement UI components - Dashboard
+  - [x] 8.1 Create SearchFilter component
+    - Create src/components/SearchFilter/SearchFilter.tsx
+    - Implement search input with icon
+    - Add risk level filter dropdown
+    - Add permission type filter dropdown
+    - Add clear filters button
+    - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5_
+  - [ ] 8.2 Create PermissionGrid component
+    - Create src/components/PermissionGrid/PermissionGrid.tsx
+    - Implement responsive grid layout (1/2/3-4 columns)
+    - Add staggered fade-in animation for cards
+    - Handle bulk selection state
+    - _Requirements: 2.1, 8.4, 9.1, 9.3, 9.4_
+  - [x] 8.3 Create EmptyState component
+    - Create src/components/EmptyState/EmptyState.tsx
+    - Display illustration/icon for no permissions
+    - Add helpful message and call-to-action
+    - Handle "no filter results" variant
+    - _Requirements: 2.4, 6.5_
+  - [x] 8.4 Create BulkActions component
+    - Create src/components/BulkActions/BulkActions.tsx
+    - Display selected count
+    - Add "Revoke Selected" button
+    - Show confirmation dialog before bulk revoke
+    - _Requirements: 4.5_
+  - [ ] 8.5 Write property test for bulk selection
+    - **Property 8: Bulk Selection Consistency**
+    - Test that bulk revocation processes all selected permissions
+    - **Validates: Requirements 4.5**
+  - [x] 8.6 Create PermissionsDashboard component
+    - Create src/components/PermissionsDashboard/PermissionsDashboard.tsx
+    - Compose SearchFilter, BulkActions, PermissionGrid, EmptyState
+    - Handle loading, empty, and filtered states
+    - _Requirements: 2.1, 2.2, 2.4_
+
+- [ ] 9. Implement UI components - Stats and History
+  - [ ] 9.1 Create StatCard component
+    - Create src/components/StatCard/StatCard.tsx
+    - Display stat value with label
+    - Add animated number transitions
+    - Include tooltip on hover
+    - _Requirements: 7.1, 7.4, 7.5_
+  - [x] 9.2 Create StatsBar component
+    - Create src/components/StatsBar/StatsBar.tsx
+    - Display total permissions, risk breakdown, recent activity
+    - Show overall risk score with visual indicator
+    - Handle loading state with skeletons
+    - _Requirements: 7.1, 7.2, 7.3_
+  - [ ] 9.3 Create HistoryEvent component
+    - Create src/components/HistoryEvent/HistoryEvent.tsx
+    - Display event type icon (grant/revoke)
+    - Show dApp name, permission type, timestamp
+    - _Requirements: 5.3_
+  - [x] 9.4 Create HistoryTimeline component
+    - Create src/components/HistoryTimeline/HistoryTimeline.tsx
+    - Display list of HistoryEvent components
+    - Handle loading and error states
+    - Show warning if Envio query fails
+    - _Requirements: 5.2, 5.4_
+
+- [ ] 10. Implement revocation flow
+  - [ ] 10.1 Implement single permission revocation
+    - Wire up revoke button in PermissionCard to usePermissions hook
+    - Show loading state during revocation
+    - Display success/error toast on completion
+    - Remove card with fade-out animation on success
+    - _Requirements: 4.1, 4.2, 4.3, 4.4_
+  - [ ] 10.2 Write property test for revocation state integrity
+    - **Property 4: Revocation State Integrity**
+    - Test that successful revocation removes permission from list
+    - Test that failed revocation restores original state
+    - **Validates: Requirements 4.3, 4.4**
+  - [ ] 10.3 Implement bulk revocation
+    - Wire up BulkActions to usePermissions hook
+    - Process all selected permissions
+    - Display summary toast with success/failure counts
+    - _Requirements: 4.5_
+
+- [ ] 11. Assemble main App and final integration
+  - [x] 11.1 Create App component
+    - Create src/App.tsx
+    - Compose all providers (WalletProvider, ToastProvider)
+    - Assemble Layout with HeroSection, StatsBar, PermissionsDashboard, HistoryTimeline
+    - _Requirements: All_
+  - [ ] 11.2 Add error boundary
+    - Create src/components/ErrorBoundary/ErrorBoundary.tsx
+    - Wrap App with error boundary
+    - Display fallback UI with retry option
+    - _Requirements: 10.1, 10.2_
+  - [ ] 11.3 Implement responsive breakpoints
+    - Test and adjust layouts for mobile (<768px)
+    - Test and adjust layouts for tablet (768px-1024px)
+    - Test and adjust layouts for desktop (>1024px)
+    - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5_
+
+- [ ] 12. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [ ] 13. Write integration tests
+  - [ ] 13.1 Write integration tests for wallet connection flow
+    - Test connect → display permissions → disconnect flow
+    - Test error handling for MetaMask not installed
+    - _Requirements: 1.1, 1.2, 1.3, 1.4, 1.5, 10.3_
+  - [ ] 13.2 Write integration tests for permission management
+    - Test filter → select → revoke flow
+    - Test bulk revocation flow
+    - _Requirements: 4.1, 4.3, 4.5, 6.2_
+
+- [ ] 14. Create README and documentation
+  - [x] 14.1 Create README.md
+    - Add project description and features
+    - Include setup instructions
+    - Add screenshots of the UI
+    - Document environment variables for Envio
+    - _Requirements: All_
+
+- [ ] 15. Final Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
