@@ -1,8 +1,6 @@
-# Architecture Documentation
+# PermitGuard - Architecture
 
-## System Overview
-
-The MetaMask Permissions Dashboard is a single-page React application that provides users with visibility and control over their wallet permissions.
+## 🏗️ System Overview
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -10,100 +8,78 @@ The MetaMask Permissions Dashboard is a single-page React application that provi
 │  ┌───────────────────────────────────────────────────────────┐  │
 │  │                    React Application                       │  │
 │  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐       │  │
-│  │  │   Context   │  │    Hooks    │  │  Components │       │  │
-│  │  │  (Wallet)   │◄─┤ (Business)  │◄─┤    (UI)     │       │  │
-│  │  └──────┬──────┘  └──────┬──────┘  └─────────────┘       │  │
-│  │         │                │                                 │  │
-│  │         ▼                ▼                                 │  │
-│  │  ┌─────────────────────────────────────┐                  │  │
-│  │  │           Service Layer              │                  │  │
-│  │  │  ┌──────────┐  ┌──────────┐         │                  │  │
-│  │  │  │ MetaMask │  │  Toast   │         │                  │  │
-│  │  │  │ Service  │  │ Service  │         │                  │  │
-│  │  │  └────┬─────┘  └──────────┘         │                  │  │
-│  │  └───────┼─────────────────────────────┘                  │  │
-│  └──────────┼────────────────────────────────────────────────┘  │
-│             │                                                    │
-│             ▼                                                    │
-│  ┌─────────────────────┐                                        │
-│  │   MetaMask Wallet   │                                        │
-│  │   (Browser Ext.)    │                                        │
-│  └─────────────────────┘                                        │
+│  │  │   UI Layer  │  │ Hook Layer  │  │Service Layer│       │  │
+│  │  │ Components  │◄─┤   Hooks     │◄─┤  Services   │       │  │
+│  │  └─────────────┘  └─────────────┘  └──────┬──────┘       │  │
+│  │                                           │               │  │
+│  └───────────────────────────────────────────┼───────────────┘  │
+│                                              │                   │
+│  ┌───────────────────────────────────────────▼───────────────┐  │
+│  │                   MetaMask Extension                       │  │
+│  │              (window.ethereum provider)                    │  │
+│  └───────────────────────────────────────────────────────────┘  │
 └─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+                    ┌─────────────────┐
+                    │   Blockchain    │
+                    │   (Ethereum)    │
+                    └─────────────────┘
 ```
 
 ---
 
-## Layer Architecture
-
-### 1. UI Layer (Components)
-
-Pure presentational components with minimal logic.
+## 📁 Project Structure
 
 ```
-src/components/
-├── Layout/              # Main layout wrapper
-├── HeroSection/         # Hero with connect button
-├── ConnectButton/       # MetaMask connection UI
-├── StatsBar/            # Statistics display
-├── PermissionCard/      # Individual permission card
-├── SkeletonCard/        # Loading placeholder
-├── SearchFilter/        # Search and filter controls
-├── BulkActions/         # Bulk selection actions
-├── EmptyState/          # Empty state displays
-├── HistoryTimeline/     # Permission history
-├── RiskBadge/           # Risk level indicator
-└── Toast/               # Toast notifications
-```
-
-### 2. Hook Layer (Business Logic)
-
-Custom hooks encapsulating business logic and state management.
-
-```
-src/hooks/
-├── usePermissions.ts    # Permission CRUD operations
-├── useHistory.ts        # Permission event history
-├── useFilters.ts        # Search and filter state
-├── useStats.ts          # Statistics calculations
-└── useToasts.ts         # Toast notification state
-```
-
-### 3. Context Layer (Global State)
-
-React Context for cross-cutting concerns.
-
-```
-src/context/
-└── WalletContext.tsx    # Wallet connection state
-```
-
-### 4. Service Layer (External APIs)
-
-Abstraction over external services.
-
-```
-src/services/
-├── metamask.service.ts  # MetaMask SDK integration
-├── envio.service.ts     # History data (mock)
-└── toast.service.ts     # Toast management
-```
-
-### 5. Utility Layer (Pure Functions)
-
-Stateless utility functions.
-
-```
-src/utils/
-├── risk.ts              # Risk level calculations
-└── filter.ts            # Filter logic
+src/
+├── components/           # React UI components
+│   ├── Layout/          # Main layout wrapper
+│   ├── HeroSection/     # Hero with connect button
+│   ├── ConnectButton/   # MetaMask connection
+│   ├── StatsBar/        # Statistics display
+│   ├── PermissionCard/  # Individual permission card
+│   ├── SearchFilter/    # Search and filter controls
+│   ├── BulkActions/     # Bulk selection actions
+│   ├── EmptyState/      # Empty state displays
+│   ├── HistoryTimeline/ # Permission history
+│   ├── RiskBadge/       # Risk level indicator
+│   ├── SkeletonCard/    # Loading placeholder
+│   └── Toast/           # Toast notifications
+│
+├── hooks/               # Custom React hooks
+│   ├── usePermissions   # Permission fetching & revocation
+│   ├── useHistory       # Permission event history
+│   ├── useFilters       # Search & filter state
+│   ├── useStats         # Dashboard statistics
+│   └── useToasts        # Toast notification state
+│
+├── services/            # External service integrations
+│   ├── metamask.service # MetaMask SDK wrapper
+│   ├── envio.service    # Envio indexer (mock)
+│   └── toast.service    # Toast management
+│
+├── context/             # React context providers
+│   └── WalletContext    # Wallet connection state
+│
+├── types/               # TypeScript interfaces
+│   ├── permission.ts    # Permission types
+│   ├── wallet.ts        # Wallet state types
+│   ├── history.ts       # History event types
+│   └── ui.ts            # UI state types
+│
+├── utils/               # Utility functions
+│   ├── risk.ts          # Risk calculation
+│   └── filter.ts        # Filter logic
+│
+└── index.css            # Global styles & CSS variables
 ```
 
 ---
 
-## Data Flow
+## 🔄 Data Flow
 
-### Wallet Connection Flow
+### 1. Wallet Connection Flow
 
 ```
 User clicks "Connect"
@@ -122,121 +98,116 @@ User clicks "Connect"
          │
          ▼
 ┌───────────────────┐
-│  MetaMask Service │
-│  eth_requestAccounts│
+│ MetaMaskService   │
+│ eth_requestAccounts│
 └────────┬──────────┘
          │
          ▼
 ┌───────────────────┐
-│  MetaMask Wallet  │
-│  User approves    │
+│ MetaMask Popup    │
+│ User approves     │
 └────────┬──────────┘
          │
          ▼
 ┌───────────────────┐
-│  Context updates  │
-│  isConnected=true │
+│ WalletContext     │
+│ state updated     │
 └────────┬──────────┘
          │
          ▼
 ┌───────────────────┐
-│  Dashboard loads  │
-│  Permissions fetch│
+│ Dashboard renders │
+│ with permissions  │
 └───────────────────┘
 ```
 
-### Permission Revocation Flow
+### 2. Permission Fetching Flow
+
+```
+Wallet connected
+        │
+        ▼
+┌───────────────────┐
+│ usePermissions    │
+│ useEffect trigger │
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│ MetaMaskService   │
+│ wallet_getPermissions│
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│ Transform raw     │
+│ permissions       │
+│ + calculate risk  │
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│ Permission[]      │
+│ state updated     │
+└────────┬──────────┘
+         │
+         ▼
+┌───────────────────┐
+│ PermissionCard    │
+│ components render │
+└───────────────────┘
+```
+
+### 3. Revocation Flow
 
 ```
 User clicks "Revoke"
         │
         ▼
 ┌───────────────────┐
-│  PermissionCard   │
-│  onRevoke(id)     │
+│ PermissionCard    │
+│ onRevoke callback │
 └────────┬──────────┘
          │
          ▼
 ┌───────────────────┐
-│  usePermissions   │
-│  revokePermission │
+│ usePermissions    │
+│ revokePermission()│
 └────────┬──────────┘
          │
          ├──────────────────┐
          │                  │
          ▼                  ▼
 ┌─────────────────┐  ┌─────────────────┐
-│ Set revoking    │  │ MetaMask Service│
-│ state (UI)      │  │ revokePermission│
+│ Set revoking    │  │ MetaMaskService │
+│ state (loading) │  │ revoke call     │
 └─────────────────┘  └────────┬────────┘
                               │
                      ┌────────┴────────┐
                      │                 │
                      ▼                 ▼
               ┌──────────┐      ┌──────────┐
-              │ Success  │      │  Error   │
+              │ Success  │      │ Failure  │
               └────┬─────┘      └────┬─────┘
                    │                 │
                    ▼                 ▼
             ┌────────────┐    ┌────────────┐
-            │Remove from │    │Restore card│
-            │permissions │    │Show error  │
-            │Show toast  │    │toast       │
+            │ Remove from│    │ Restore    │
+            │ state      │    │ state      │
+            └────────────┘    └────────────┘
+                   │                 │
+                   ▼                 ▼
+            ┌────────────┐    ┌────────────┐
+            │ Success    │    │ Error      │
+            │ toast      │    │ toast      │
             └────────────┘    └────────────┘
 ```
 
 ---
 
-## State Management
+## 🎨 Component Architecture
 
-### Global State (Context)
-
-```typescript
-interface WalletState {
-  address: string | null;
-  isConnected: boolean;
-  isConnecting: boolean;
-  chainId: number | null;
-  error: string | null;
-}
-```
-
-### Local State (Hooks)
-
-Each feature hook manages its own state:
-
-```typescript
-// usePermissions
-permissions: Permission[]
-isLoading: boolean
-revokingIds: Set<string>
-
-// useFilters
-filters: FilterState
-hasFilters: boolean
-
-// useStats
-stats: DashboardStats
-```
-
-### Derived State
-
-Computed from base state:
-
-```typescript
-// Filtered permissions
-const filteredPermissions = applyFilters(permissions, filters);
-
-// Risk counts
-const counts = countByRiskLevel(permissions);
-
-// Overall risk score
-const score = calculateOverallRiskScore(permissions);
-```
-
----
-
-## Component Hierarchy
+### Component Hierarchy
 
 ```
 App
@@ -268,122 +239,128 @@ App
 
 ---
 
-## Key Design Decisions
+## 🔧 Key Technologies
 
-### 1. Pure CSS over Tailwind
-
-**Decision:** Use custom CSS with CSS variables instead of Tailwind.
-
-**Rationale:**
-- Full control over styling
-- No build-time dependencies
-- Smaller bundle size
-- Easier to customize glassmorphism effects
-
-### 2. Service Layer Abstraction
-
-**Decision:** Abstract MetaMask SDK behind a service interface.
-
-**Rationale:**
-- Easier testing (mock the service)
-- Swap implementations without changing hooks
-- Centralized error handling
-- Demo mode support
-
-### 3. Property-Based Testing
-
-**Decision:** Use fast-check for core logic testing.
-
-**Rationale:**
-- Catches edge cases unit tests miss
-- Proves correctness properties
-- Documents expected behavior
-- Higher confidence in risk calculations
-
-### 4. Demo Data Fallback
-
-**Decision:** Return demo permissions when real data unavailable.
-
-**Rationale:**
-- Portfolio showcase works without MetaMask
-- Demonstrates full UI capabilities
-- Better developer experience
-- Judges can evaluate without setup
+| Layer | Technology | Purpose |
+|-------|------------|---------|
+| UI Framework | React 19 | Component-based UI |
+| Language | TypeScript | Type safety |
+| Build Tool | Vite | Fast dev/build |
+| Styling | Pure CSS | Custom design system |
+| Animations | Framer Motion | Smooth transitions |
+| Icons | Lucide React | Consistent iconography |
+| Wallet | MetaMask SDK | Wallet integration |
+| Testing | Vitest + fast-check | Unit & property tests |
+| Dates | date-fns | Date formatting |
 
 ---
 
-## File Structure
+## 🎯 Design Patterns
 
-```
-src/
-├── components/          # React components
-│   └── [Component]/
-│       ├── index.ts     # Export
-│       ├── [Component].tsx
-│       └── [Component].css
-│
-├── hooks/               # Custom React hooks
-│   ├── index.ts
-│   └── use[Hook].ts
-│
-├── services/            # External service integrations
-│   ├── index.ts
-│   └── [service].service.ts
-│
-├── context/             # React context providers
-│   └── [Context]Context.tsx
-│
-├── types/               # TypeScript interfaces
-│   ├── index.ts
-│   └── [domain].ts
-│
-├── utils/               # Pure utility functions
-│   ├── index.ts
-│   ├── [util].ts
-│   └── [util].test.ts
-│
-├── test/                # Test setup
-│   └── setup.ts
-│
-├── App.tsx              # Root component
-├── main.tsx             # Entry point
-└── index.css            # Global styles
+### 1. Service Layer Pattern
+Services abstract external APIs (MetaMask, Envio) from React components.
+
+```typescript
+// Service interface
+interface IMetaMaskService {
+  connect(): Promise<string>;
+  getPermissions(): Promise<Permission[]>;
+  revokePermission(id: string): Promise<void>;
+}
+
+// Implementation
+class MetaMaskService implements IMetaMaskService {
+  // ... implementation
+}
+
+// Singleton export
+export const metamaskService = new MetaMaskService();
 ```
 
+### 2. Custom Hook Pattern
+Hooks encapsulate stateful logic and side effects.
+
+```typescript
+function usePermissions() {
+  const [permissions, setPermissions] = useState<Permission[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Fetch, revoke, etc.
+  
+  return { permissions, isLoading, revokePermission };
+}
+```
+
+### 3. Context Provider Pattern
+Global state shared via React Context.
+
+```typescript
+const WalletContext = createContext<WalletContextValue | null>(null);
+
+export function WalletProvider({ children }) {
+  const [state, setState] = useState(initialState);
+  // ...
+  return (
+    <WalletContext.Provider value={value}>
+      {children}
+    </WalletContext.Provider>
+  );
+}
+```
+
+### 4. CSS Custom Properties
+Theming via CSS variables for consistency.
+
+```css
+:root {
+  --color-safe: #10b981;
+  --color-moderate: #f59e0b;
+  --color-dangerous: #ef4444;
+  --color-bg-card: rgba(255, 255, 255, 0.03);
+}
+```
+
 ---
 
-## Performance Considerations
+## 🧪 Testing Strategy
 
-### Bundle Size
-- No heavy UI framework (no Tailwind, no Material UI)
-- Tree-shakeable imports from lucide-react
-- Framer Motion only for essential animations
+### Unit Tests
+- Risk calculation functions
+- Filter utility functions
+- Component rendering
 
-### Rendering
-- Memoized filtered permissions
-- Staggered card animations (not all at once)
-- Skeleton loaders prevent layout shift
+### Property-Based Tests
+- Risk level determinism
+- Filter correctness
+- Filter idempotence
 
-### Network
-- Demo data eliminates network dependency
-- Graceful degradation if services fail
-- Local storage for filter preferences
+```typescript
+// Example property test
+fc.assert(
+  fc.property(accessLevelArb, spendLimitArb, (access, limit) => {
+    const result1 = calculateRiskLevel(access, limit);
+    const result2 = calculateRiskLevel(access, limit);
+    expect(result1).toBe(result2); // Deterministic
+  })
+);
+```
 
 ---
 
-## Security Considerations
+## 🔒 Security Considerations
 
-### No Private Keys
-- Never access or store private keys
-- Only read public permission data
-- Revocation happens through MetaMask
+1. **No Private Keys** - Never access or store private keys
+2. **Read-Only by Default** - Only request necessary permissions
+3. **User Confirmation** - All revocations require user approval
+4. **No Backend** - Fully client-side, no data leaves the browser
+5. **Open Source** - Code is auditable
 
-### Input Validation
-- All user inputs sanitized
-- URL parsing in try/catch
-- Type-safe throughout
+---
 
-### Error Handling
-- Errors don't expose internals
-- Graceful fallbacks everywhere
-- User-friendly error messages
+## 🚀 Performance Optimizations
+
+1. **Lazy Loading** - Components load on demand
+2. **Memoization** - `useMemo` for expensive calculations
+3. **Virtualization Ready** - Grid can be virtualized for large lists
+4. **Optimistic Updates** - UI updates before confirmation
+5. **Skeleton Loading** - Perceived performance improvement

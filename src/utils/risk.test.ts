@@ -4,7 +4,7 @@ import { calculateRiskLevel, calculateOverallRiskScore, countByRiskLevel } from 
 import type { Permission, AccessLevel, SpendLimit, RiskLevel } from '@/types';
 
 /**
- * **Feature: metamask-permissions-dashboard, Property 3: Risk Level Determinism**
+ * **Feature: permitguard, Property 3: Risk Level Determinism**
  * *For any* permission with a given accessLevel and spendLimit, the calculated RiskLevel
  * SHALL always be the same value (readonly→safe, unlimited→dangerous, write→moderate).
  * **Validates: Requirements 3.1, 3.2, 3.3, 3.4**

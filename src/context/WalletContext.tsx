@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, type React
 import type { WalletState, WalletContextValue } from '@/types';
 import { metamaskService, toastService } from '@/services';
 
-const STORAGE_KEY = 'metamask-dashboard-last-address';
+const STORAGE_KEY = 'permitguard-last-address';
 
 const initialState: WalletState = {
     address: null,

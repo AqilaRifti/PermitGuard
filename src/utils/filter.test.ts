@@ -23,7 +23,7 @@ const permissionArb: fc.Arbitrary<Permission> = fc.record({
 const permissionsArb = fc.array(permissionArb, { minLength: 0, maxLength: 20 });
 
 /**
- * **Feature: metamask-permissions-dashboard, Property 5: Filter Result Correctness**
+ * **Feature: permitguard, Property 5: Filter Result Correctness**
  * *For any* applied filter (search query, risk level, or permission type), all displayed
  * Permission_Cards SHALL match the filter criteria, and no matching permissions SHALL be hidden.
  * **Validates: Requirements 6.2, 6.3, 6.4**
@@ -190,7 +190,7 @@ describe('Filter Utilities - Property Tests', () => {
 });
 
 /**
- * **Feature: metamask-permissions-dashboard, Property 7: Search Filter Idempotence**
+ * **Feature: permitguard, Property 7: Search Filter Idempotence**
  * *For any* search query, applying the same filter twice in succession SHALL produce identical results.
  * **Validates: Requirements 6.2**
  */

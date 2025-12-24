@@ -40,7 +40,7 @@ class MetaMaskService implements IMetaMaskService {
         if (typeof window !== 'undefined') {
             new MetaMaskSDK({
                 dappMetadata: {
-                    name: 'MetaMask Permissions Dashboard',
+                    name: 'PermitGuard',
                     url: window.location.href,
                 },
             });

@@ -1,4 +1,4 @@
-# MetaMask Permissions Dashboard - Demo Guide
+# PermitGuard - Demo Guide
 
 ## 🎬 Demo Script (60-90 seconds)
 
@@ -72,7 +72,7 @@
 ---
 
 ### Closing (85-90s)
-> "Your wallet, your permissions, your control. MetaMask Permissions Dashboard."
+> "Your wallet, your permissions, your control. PermitGuard."
 
 **Action:** Show the clean dashboard with remaining safe permissions.
 

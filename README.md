@@ -1,8 +1,10 @@
-# MetaMask Advanced Permissions Dashboard
+# PermitGuard
+
+> Take control of your wallet. See every permission. Revoke with one click.
 
 A modern, professional single-page web application for viewing and managing all MetaMask wallet permissions. Built with React, Vite, and pure CSS featuring a stunning Web3 aesthetic.
 
-![Dashboard Preview](https://via.placeholder.com/800x400?text=MetaMask+Permissions+Dashboard)
+![Dashboard Preview](https://via.placeholder.com/800x400?text=PermitGuard+Dashboard)
 
 ## Features
 
@@ -40,7 +42,7 @@ A modern, professional single-page web application for viewing and managing all 
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd metamask-permissions-dashboard
+cd permitguard
 
 # Install dependencies
 npm install

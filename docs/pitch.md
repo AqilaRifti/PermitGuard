@@ -1,113 +1,104 @@
-# MetaMask Permissions Dashboardch
+# PermitGuard - Pitch
 
 ## 🎯 The Problem
 
 **Web3 users are blind to their wallet's exposure.**
 
-Every time you connect to a dApp, you grant pers:
+Every time you connect to a dApp, you grant permissions. Over time, these accumulate into a tangled web of access rights that most users:
 - Don't know exist
 - Can't easily find
 - Have no simple way to revoke
 
-**The result?** Wallets remain connected to abandoned projects, compromised p
+**The result?** Wallets remain connected to abandoned projects, compromised protocols, and forgotten dApps—each one a potential attack vector.
 
 ---
 
-## 💡 The Solutn
+## 💡 The Solution
 
-**MetaMask Permissions Dashboard** - A single-page app that gives users complete sions.
+**PermitGuard** - A single-page app that gives users complete visibility and control over their wallet permissions.
 
-### One Dashboar
+### One Dashboard. Total Control.
 
-- **See Everything**  one view
-- **Understand Risk**rous)
-- **Act Fast** - One-click revocation for individual or bulk permissi
+- **See Everything** - All dApps with active permissions in one view
+- **Understand Risk** - Color-coded risk levels (safe/moderate/dangerous)
+- **Act Fast** - One-click revocation for individual or bulk permissions
 - **Track History** - Timeline of all permission events
 
 ---
 
 ## 🚀 Why This Matters
 
-###rs
-
-- **Awarene
-missions
+### For Users
+- **Security** - Identify and revoke risky permissions before they're exploited
+- **Awareness** - Finally understand what access you've granted
+- **Control** - Take back ownership of your wallet's permissions
 
 ### For the Ecosystem
 - **Trust** - Users who feel in control are more confident in Web3
-- **Education** - Visual risk indicators teach us
-t
+- **Education** - Visual risk indicators teach users about permission types
+- **Standards** - Promotes best practices for dApp permission management
 
 ---
 
-ove It
+## 🎨 Why Judges Will Love It
 
 ### 1. It's Beautiful
-Modern Web3 aesthetic with glassmorphism, sms.
+Modern Web3 aesthetic with glassmorphism, smooth animations, and a polished dark theme.
 
 ### 2. It's Useful
-Solves a real problem that every MetaMask user well.
+Solves a real problem that every MetaMask user faces but few tools address well.
 
+### 3. It's Complete
+Not a prototype—a fully functional dashboard with search, filters, and bulk actions.
 
-Notn.
-
-### 4. It's Prthy
-tice.
+### 4. It's Portfolio-Worthy
+The kind of project that makes recruiters and investors take notice.
 
 ---
 
 ## 📊 Market Opportunity
 
-ue |
-|--
- 30M+ |
-| Average Permi-50 |
-<20% |
-| Existing Solutions | Limited (Revoke.cash focuses on token|
+| Metric | Value |
+|--------|-------|
+| MetaMask Monthly Active Users | 30M+ |
+| Average Permissions per Wallet | 10-50 |
+| Users Aware of Permission Risks | Less than 20% |
 
 ---
 
-on
+## 🔮 Future Vision
 
-
-✅ Permission visibili
-ent
-✅ Beautiful UI
+### Phase 1 (Current)
+- Permission visibility and revocation
+- Risk assessment
+- Beautiful UI
 
 ### Phase 2
-- Real-time alerts for new permi
-ndations
-- Cport
+- Real-time alerts for new permission requests
+- Permission expiry recommendations
+- Cross-chain support
 
-### Phase 
-ion
+### Phase 3
+- Browser extension integration
 - Mobile app
-l teams
+- Enterprise dashboard for protocol teams
 
 ---
 
 ## 🏆 Competitive Advantage
 
-
+| Feature | Us | Revoke.cash | Others |
 |---------|-----|-------------|--------|
-gether.
- tot's build itlity. Leth visibistarts wi security re of Web3The futuissions.
+| MetaMask Permissions | Yes | No | No |
+| Risk Scoring | Yes | No | No |
+| Modern UI/UX | Yes | Partial | No |
+| Bulk Actions | Yes | Yes | No |
+| Permission History | Yes | No | No |
 
-ur permrking in yo's been lu see whatt and your wallect.** Connenowit ry n
+---
 
-**Tall to Actio C---
+## 📞 Call to Action
 
-## 📞ne.
+**Try it now.** Connect your wallet and see what's been lurking in your permissions.
 
-yoerble to evssi be acceould shb3 security We believes whoelopery devh passion bt witil
-Bueam
-
-
-## 👥 T
-
---- | ❌ | ❌ |story | ✅mission Hi| ❌ |
-| Perns | ✅ | ✅ ulk Actio❌ |
-| B ⚠️ | /UX | ✅ |dern UI❌ |
-| Mo| ❌ | | ✅  Scoring Risk | ✅ |
-|  | 🔜 | ✅rovalsToken App | ❌ |
-|  | ❌ | ✅ions Permiss MetaMask|
+The future of Web3 security starts with visibility.

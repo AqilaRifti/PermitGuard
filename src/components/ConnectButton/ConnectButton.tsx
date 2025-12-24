@@ -20,7 +20,7 @@ export function ConnectButton() {
                     Install MetaMask
                 </a>
                 <p className="connect-hint">
-                    MetaMask is required to use this dashboard
+                    MetaMask is required to use PermitGuard
                 </p>
             </div>
         );

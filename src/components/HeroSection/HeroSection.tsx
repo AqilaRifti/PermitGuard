@@ -12,7 +12,7 @@ export function HeroSection() {
     return (
         <section className="hero">
             <h1 className="hero-title">
-                MetaMask Permissions Dashboard
+                PermitGuard
             </h1>
             <p className="hero-subtitle">
                 View and manage all dApp permissions granted to your wallet.

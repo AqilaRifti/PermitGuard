@@ -2,7 +2,7 @@ import { useState, useCallback, useEffect } from 'react';
 import type { FilterState, RiskLevel, PermissionType } from '@/types';
 import { createEmptyFilterState, hasActiveFilters } from '@/utils/filter';
 
-const STORAGE_KEY = 'metamask-dashboard-filters';
+const STORAGE_KEY = 'permitguard-filters';
 
 interface UseFiltersReturn {
     filters: FilterState;
