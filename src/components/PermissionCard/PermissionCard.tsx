@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Eye, Edit, Coins, Trash2, ExternalLink, Clock } from 'lucide-react';
+import { Eye, Edit, Coins, Trash2, ExternalLink, Clock, AlertTriangle } from 'lucide-react';
 import { format, formatDistanceToNow } from 'date-fns';
 import type { Permission } from '@/types';
 import { RiskBadge } from '@/components/RiskBadge';
@@ -44,7 +44,7 @@ export function PermissionCard({
             <div className="card-header">
                 <input
                     type="checkbox"
-                    className="checkbox"
+                    className="card-checkbox"
                     checked={isSelected}
                     onChange={() => onSelect(permission.id)}
                     disabled={isRevoking}
@@ -59,7 +59,7 @@ export function PermissionCard({
                         className="dapp-url"
                     >
                         {new URL(permission.dAppUrl).hostname}
-                        <ExternalLink size={12} />
+                        <ExternalLink size={11} />
                     </a>
                 </div>
                 <RiskBadge level={permission.riskLevel} />
@@ -77,8 +77,9 @@ export function PermissionCard({
 
                     <div className="detail-item">
                         <span className="detail-label">Access Level</span>
-                        <span className="detail-value access-level">
-                            {permission.accessLevel === 'unlimited' ? '⚠️ Unlimited' : permission.accessLevel}
+                        <span className={`detail-value ${permission.accessLevel === 'unlimited' ? 'access-level-unlimited' : 'access-level'}`}>
+                            {permission.accessLevel === 'unlimited' && <AlertTriangle size={14} />}
+                            {permission.accessLevel === 'unlimited' ? 'Unlimited' : permission.accessLevel}
                         </span>
                     </div>
 
@@ -125,7 +126,7 @@ export function PermissionCard({
                         </>
                     ) : (
                         <>
-                            <Trash2 size={14} />
+                            <Trash2 size={15} />
                             Revoke Access
                         </>
                     )}
