@@ -2,29 +2,6 @@
 
 > **Take control of your wallet. See every permission. Revoke with one click.**
 
-![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![React](https://img.shields.io/badge/React-19-61DAFB.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6.svg)
-
----
-
-## 🎬 Demo
-
-[▶️ Watch Demo Video](#) | [🌐 Live Demo](#)
-
----
-
-## 📸 Screenshots
-
-### Dashboard Overview
-![Dashboard](https://via.placeholder.com/800x450/1a1a2e/ffffff?text=Dashboard+Overview)
-
-### Permission Cards with Risk Assessment
-![Permission Cards](https://via.placeholder.com/800x450/1a1a2e/ffffff?text=Permission+Cards)
-
-### Mobile Responsive Design
-![Mobile View](https://via.placeholder.com/400x700/1a1a2e/ffffff?text=Mobile+View)
-
 ---
 
 ## 🎯 Problem Statement
@@ -169,13 +146,3 @@ MIT License - feel free to use this project for your own purposes.
 - MetaMask team for the SDK
 - The Web3 security community
 - All the dApps that inspired better permission management
-
----
-
-<div align="center">
-
-**⭐ Star this repo if you found it useful!**
-
-[Report Bug](#) · [Request Feature](#) · [Documentation](./docs/)
-
-</div>
